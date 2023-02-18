@@ -1,0 +1,33 @@
+server:
+  port: 8082
+  servlet:
+    context-path: /mybatis
+    encoding:
+      charset: UTF-8
+spring:
+  application:
+    name: mybatis
+  datasource:
+    url: jdbc:postgresql://localhost:5432/mybatis
+    driver-class-name: org.postgresql.Driver
+    username: kocesat
+    password: Ankara06
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+# Mybatis configuration
+mybatis:
+  mapper-locations: classpath:mapper/*
+# Normally, we need to write package name for each class written
+#  in xml mapper config in MyBatiss. With this set, we do not need to write
+#  package names to all classes
+  type-aliases-package: com.kocesat.mybatisdemo.model**
+  configuration:
+# class fields'names to sql column name
+# firstName --> FIRST_NAME
+    map-underscore-to-camel-case: true

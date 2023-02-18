@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace = "com.kocesat.mybatisdemo.repo.StudentRepository">
+    <insert id="save" parameterType="Student" useGeneratedKeys="true">
+        insert into students (first_name, age) values (#{firstName}, #{age})
+    </insert>
+
+    <select id="findById" parameterType="Integer" resultType="Student">
+        select * from students where id = #{id}
+    </select>
+
+    <select id="findByFirstName" parameterType="String" resultType="Student">
+        select * from students where first_name = #{firstName}
+    </select>
+
+    <update id="update" parameterType="Student">
+        update students set first_name = #{firstName}, age = #{age}
+        where id = #{id}
+    </update>
+
+    <!--  public void deleteById(int id)    -->
+    <delete id="deleteById" parameterType="Integer">
+        delete from students where id = #{id}
+    </delete>
+    
+    <select id="selectByExample" parameterType="Student" resultType="Student">
+        select * from students
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+            <if test="firstName != null">
+                and first_name = #{firstName}
+            </if>
+            <if test="age != null">
+                and age = #{age}
+            </if>
+        </where>
+    </select>
+
+    <select id = "getByMultipleId" resultType = "Student">
+        SELECT *
+        FROM students s
+        WHERE ID in
+        <foreach item = "item" index = "index" collection = "ids"
+                 open = "(" separator = "," close = ")">
+            #{item}
+        </foreach>
+
+    </select>
+</mapper>
+
+
