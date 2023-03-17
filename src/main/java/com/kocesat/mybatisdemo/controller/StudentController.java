@@ -27,6 +27,11 @@ public class StudentController {
     final var student = studentService.findById(id);
     return ResponseEntity.ok(student);
   }
+  
+  @GetMapping("/list")
+  public ResponseEntity<List<Student>> findAll() {
+	  return ResponseEntity.ok(studentService.findAll());
+  }
 
   @GetMapping
   public ResponseEntity<List<Student>> findByFirstName(@RequestParam("firstName") String name) {
@@ -34,6 +39,7 @@ public class StudentController {
     return ResponseEntity.ok(students);
   }
 
+  @SuppressWarnings("rawtypes")
   @PostMapping("/transactional-test")
   public ResponseEntity testTransactional(@RequestBody Student student, @RequestParam("error") boolean error) {
     studentService.testTransactional(student, error);
