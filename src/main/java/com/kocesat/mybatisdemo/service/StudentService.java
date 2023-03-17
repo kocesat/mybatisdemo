@@ -26,7 +26,6 @@ public class StudentService {
   }
   
   public List<Student> findAll() {
-	  // put your business logic
 	  return repo.getAll();
   }
 
