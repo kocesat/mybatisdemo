@@ -14,4 +14,5 @@ public interface StudentRepository {
   void deleteById(int id);
   Student selectByExample(Student student);
   List<Student> getByMultipleId(List<Integer> ids);
+  List<Student> getAll();
 }

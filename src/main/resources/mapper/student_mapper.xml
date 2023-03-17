@@ -12,6 +12,10 @@
     <select id="findByFirstName" parameterType="String" resultType="Student">
         select * from students where first_name = #{firstName}
     </select>
+    
+    <select id="getAll" resultType="Student">
+    	select * from students
+    </select>
 
     <update id="update" parameterType="Student">
         update students set first_name = #{firstName}, age = #{age}

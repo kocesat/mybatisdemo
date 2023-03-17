@@ -24,6 +24,10 @@ public class StudentService {
       throw new RuntimeException("Transactional should cause rollback here");
     }
   }
+  
+  public List<Student> findAll() {
+	  return repo.getAll();
+  }
 
   public List<Student> findByName(String name) {
     return repo.findByFirstName(name);
