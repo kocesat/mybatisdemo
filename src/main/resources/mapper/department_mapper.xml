@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace = "com.kocesat.mybatisdemo.repo.DepartmentRepository">
+    <insert id="save" parameterType="Department" useGeneratedKeys="true">
+        insert into departments (name) values (#{name})
+    </insert>
+
+    <select id="findById" parameterType="Integer" resultType="Department">
+        select * from departments where id = #{id}
+    </select>
+
+    <select id="findAll" resultType="Department">
+        select * from departments limit 1000
+    </select>
+
+</mapper>
+
+

@@ -1,8 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace = "com.kocesat.mybatisdemo.repo.StudentRepository">
+    <resultMap type='Student' id='StudentResultMap'>
+        <id property='id' column='id'/>
+        <result property='firstName' column='first_name'/>
+        <result property='age' column='age'/>
+        <association property='department' resultMap='DepartmentResultMap'/>
+    </resultMap>
+
+    <resultMap type='Department' id='DepartmentResultMap'>
+        <id property='id' column='department_id'/>
+        <result property='name' column='name'/>
+    </resultMap>
+
+    <parameterMap id="PageableMap" type="com.kocesat.mybatisdemo.base.Pageable">
+        <parameter property="limit" javaType="Integer" />
+        <parameter property="offset" javaType="Integer" />
+
+    </parameterMap>
+
     <insert id="save" parameterType="Student" useGeneratedKeys="true">
-        insert into students (first_name, age) values (#{firstName}, #{age})
+        insert into students (first_name, age, department_id) values (#{firstName}, #{age}, #{department.id})
     </insert>
 
     <select id="findById" parameterType="Integer" resultType="Student">
@@ -15,6 +33,23 @@
     
     <select id="getAll" resultType="Student">
     	select * from students
+    </select>
+
+    <select id="findAll" resultMap="StudentResultMap">
+        select s.*, d.id department_id, d.name name
+        from students s
+        left join departments d
+        on s.department_id = d.id
+        limit 1000
+    </select>
+
+    <select id="findAllWithPage" parameterMap="PageableMap" resultMap="StudentResultMap">
+        select s.*, d.id department_id, d.name name
+        from students s
+        left join departments d
+        on s.department_id = d.id
+        limit #{limit}
+        offset #{offset}
     </select>
 
     <update id="update" parameterType="Student">
@@ -50,7 +85,6 @@
                  open = "(" separator = "," close = ")">
             #{item}
         </foreach>
-
     </select>
 </mapper>
 

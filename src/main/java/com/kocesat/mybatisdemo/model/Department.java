@@ -9,9 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Student {
+public class Department {
   private Integer id;
-  private String firstName;
-  private int age;
-  private Department department;
+  private String name;
 }

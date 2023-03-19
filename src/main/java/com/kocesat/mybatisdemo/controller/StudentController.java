@@ -1,6 +1,7 @@
 package com.kocesat.mybatisdemo.controller;
 
 import com.kocesat.mybatisdemo.model.Student;
+import com.kocesat.mybatisdemo.model.dto.StudentCreateDto;
 import com.kocesat.mybatisdemo.model.dto.StudentIdListWrapper;
 import com.kocesat.mybatisdemo.service.StudentService;
 import lombok.RequiredArgsConstructor;
@@ -17,10 +18,26 @@ public class StudentController {
   private final StudentService studentService;
 
   @PostMapping
-  public ResponseEntity create(@RequestBody Student student) {
-    studentService.create(student);
+  public ResponseEntity create(@RequestBody StudentCreateDto dto) {
+    studentService.create(dto);
     return ResponseEntity.ok(null);
   }
+
+//  @GetMapping("/list")
+//  public ResponseEntity<List<Student>> getAll() {
+//    final var students = studentService.findAll();
+//    return ResponseEntity.ok(students);
+//  }
+
+  @GetMapping("/list")
+  public ResponseEntity<List<Student>> getAllWithPage(
+    @RequestParam("pageNum") Integer pageNum,
+    @RequestParam("pageSize") Integer pageSize
+    ) {
+    final var students = studentService.findAllWithPage(pageNum, pageSize);
+    return ResponseEntity.ok(students);
+  }
+
 
   @GetMapping("/{id}")
   public ResponseEntity<Student> findById(@PathVariable("id") Integer id) {
