@@ -5,6 +5,7 @@
         <id property='id' column='id'/>
         <result property='firstName' column='first_name'/>
         <result property='age' column='age'/>
+        <result property="enrolledAt" column="enrolled_at" javaType="java.time.LocalDateTime" />
         <association property='department' resultMap='DepartmentResultMap'/>
     </resultMap>
 
@@ -19,8 +20,9 @@
 
     </parameterMap>
 
-    <insert id="save" parameterType="Student" useGeneratedKeys="true">
-        insert into students (first_name, age, department_id) values (#{firstName}, #{age}, #{department.id})
+    <insert id="save" parameterType="Student" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into students (first_name, age, department_id, enrolled_at)
+        values (#{firstName}, #{age}, #{department.id}, #{enrolledAt})
     </insert>
 
     <select id="findById" parameterType="Integer" resultType="Student">

@@ -1,13 +1,10 @@
 package com.kocesat.mybatisdemo.controller;
 
 import com.kocesat.mybatisdemo.model.Department;
+import com.kocesat.mybatisdemo.model.dto.DepartmentDto;
 import com.kocesat.mybatisdemo.service.DepartmentService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,6 +13,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DepartmentController {
   private final DepartmentService departmentService;
+
+  @PostMapping
+  public DepartmentDto create(@RequestBody DepartmentDto dto) {
+    Department department = departmentService.save(dto);
+    System.out.println(department.getId());
+    return DepartmentDto.builder()
+      .id(department.getId())
+      .name(department.getName())
+      .build();
+  }
 
   @GetMapping
   public List<Department> getAll() {

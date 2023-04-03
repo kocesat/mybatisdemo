@@ -18,16 +18,10 @@ public class StudentController {
   private final StudentService studentService;
 
   @PostMapping
-  public ResponseEntity create(@RequestBody StudentCreateDto dto) {
-    studentService.create(dto);
-    return ResponseEntity.ok(null);
+  public ResponseEntity<Student> create(@RequestBody StudentCreateDto dto) {
+    final Student student = studentService.create(dto);
+    return ResponseEntity.ok(student);
   }
-
-//  @GetMapping("/list")
-//  public ResponseEntity<List<Student>> getAll() {
-//    final var students = studentService.findAll();
-//    return ResponseEntity.ok(students);
-//  }
 
   @GetMapping("/list")
   public ResponseEntity<List<Student>> getAllWithPage(
@@ -43,11 +37,6 @@ public class StudentController {
   public ResponseEntity<Student> findById(@PathVariable("id") Integer id) {
     final var student = studentService.findById(id);
     return ResponseEntity.ok(student);
-  }
-  
-  @GetMapping("/list")
-  public ResponseEntity<List<Student>> findAll() {
-	  return ResponseEntity.ok(studentService.findAll());
   }
 
   @GetMapping
@@ -68,5 +57,4 @@ public class StudentController {
     List<Student> students = studentService.findByMultipleId(idListWrapper.getIdList());
     return ResponseEntity.ok(students);
   }
-
 }

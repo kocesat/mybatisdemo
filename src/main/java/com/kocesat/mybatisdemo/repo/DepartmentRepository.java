@@ -9,6 +9,8 @@ import java.util.List;
 @Mapper
 @Repository
 public interface DepartmentRepository {
+
+  void insert(Department department);
   List<Department> findAll();
   List<Department> findById(Integer id);
 }

@@ -1,6 +1,7 @@
 package com.kocesat.mybatisdemo.service;
 
 import com.kocesat.mybatisdemo.base.Pageable;
+import com.kocesat.mybatisdemo.constant.AppConstant;
 import com.kocesat.mybatisdemo.model.Student;
 import com.kocesat.mybatisdemo.model.dto.StudentCreateDto;
 import com.kocesat.mybatisdemo.repo.StudentRepository;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 @Service
@@ -19,15 +22,17 @@ public class StudentService {
   private final DepartmentService departmentService;
 
   @Transactional
-  public void create(StudentCreateDto dto) {
+  public Student create(StudentCreateDto dto) {
     final var departments = departmentService.findById(dto.getDepartmentId());
     final var department = departments.get(0);
     final Student student = Student.builder()
         .age(dto.getAge())
         .firstName(dto.getFirstName())
         .department(department)
+      .enrolledAt(LocalDateTime.now(ZoneId.of(AppConstant.TR_ZONE)))
         .build();
     studentRepository.save(student);
+    return student;
   }
 
   public void testTransactional(Student student, boolean error) {
