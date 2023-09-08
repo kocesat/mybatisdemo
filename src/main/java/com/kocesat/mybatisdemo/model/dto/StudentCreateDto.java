@@ -6,7 +6,9 @@ import lombok.Value;
 @Value
 @Builder
 public class StudentCreateDto {
+  
   String firstName;
   Integer age;
   Integer departmentId;
+  String address;
 }

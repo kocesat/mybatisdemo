@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace = "com.kocesat.mybatisdemo.repo.AddressRepository">
+
+    <insert id="insert" parameterType="Address" useGeneratedKeys="true"
+            keyColumn="id" keyProperty="id">
+        insert into addresses (address) values (#{address})
+    </insert>
+
+    <select id="findById" parameterType="Integer" resultType="Address">
+        select * from adresses where id = #{id}
+    </select>
+
+    <select id="findAll" resultType="Address">
+        select * from addresses limit 1000
+    </select>
+
+</mapper>
+
+

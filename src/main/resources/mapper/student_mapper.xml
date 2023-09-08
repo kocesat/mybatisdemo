@@ -7,6 +7,7 @@
         <result property='age' column='age'/>
         <result property="enrolledAt" column="enrolled_at" javaType="java.time.LocalDateTime" />
         <association property='department' resultMap='DepartmentResultMap'/>
+        <association property='address' resultMap='AddressResultMap'/>
     </resultMap>
 
     <resultMap type='Department' id='DepartmentResultMap'>
@@ -14,15 +15,19 @@
         <result property='name' column='name'/>
     </resultMap>
 
+    <resultMap type='Address' id='AddressResultMap'>
+        <id property='id' column='address_id'/>
+        <result property='address' column='address'/>
+    </resultMap>
+
     <parameterMap id="PageableMap" type="com.kocesat.mybatisdemo.base.Pageable">
         <parameter property="limit" javaType="Integer" />
         <parameter property="offset" javaType="Integer" />
-
     </parameterMap>
 
     <insert id="save" parameterType="Student" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-        insert into students (first_name, age, department_id, enrolled_at)
-        values (#{firstName}, #{age}, #{department.id}, #{enrolledAt})
+        insert into students (first_name, age, department_id, enrolled_at, address_id)
+        values (#{firstName}, #{age}, #{department.id}, #{enrolledAt}, #{address.id})
     </insert>
 
     <select id="findById" parameterType="Integer" resultType="Student">
@@ -38,18 +43,22 @@
     </select>
 
     <select id="findAll" resultMap="StudentResultMap">
-        select s.*, d.id department_id, d.name name
+        select s.*, d.id department_id, d.name name, a.address
         from students s
         left join departments d
         on s.department_id = d.id
+        left join addresses a
+        on s.address_id = a.id
         limit 1000
     </select>
 
     <select id="findAllWithPage" parameterMap="PageableMap" resultMap="StudentResultMap">
-        select s.*, d.id department_id, d.name name
+        select s.*, d.id department_id, d.name name, a.address
         from students s
         left join departments d
         on s.department_id = d.id
+        left join addresses a
+        on s.address_id = a.id
         limit #{limit}
         offset #{offset}
     </select>

@@ -2,6 +2,7 @@ package com.kocesat.mybatisdemo.service;
 
 import com.kocesat.mybatisdemo.base.Pageable;
 import com.kocesat.mybatisdemo.constant.AppConstant;
+import com.kocesat.mybatisdemo.model.Department;
 import com.kocesat.mybatisdemo.model.Student;
 import com.kocesat.mybatisdemo.model.dto.StudentCreateDto;
 import com.kocesat.mybatisdemo.repo.StudentRepository;
@@ -23,14 +24,13 @@ public class StudentService {
 
   @Transactional
   public Student create(StudentCreateDto dto) {
-    final var departments = departmentService.findById(dto.getDepartmentId());
-    final var department = departments.get(0);
+    final Department department = departmentService.findById(dto.getDepartmentId());
     final Student student = Student.builder()
-        .age(dto.getAge())
-        .firstName(dto.getFirstName())
-        .department(department)
+      .age(dto.getAge())
+      .firstName(dto.getFirstName())
+      .department(department)
       .enrolledAt(LocalDateTime.now(ZoneId.of(AppConstant.TR_ZONE)))
-        .build();
+      .build();
     studentRepository.save(student);
     return student;
   }

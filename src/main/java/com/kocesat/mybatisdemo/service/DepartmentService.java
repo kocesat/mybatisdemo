@@ -24,8 +24,12 @@ public class DepartmentService {
     return departmentRepository.findAll();
   }
 
-  public List<Department> findById(Integer id) {
-    return departmentRepository.findById(id);
+  public Department findById(Integer id) {
+    List<Department> departments = departmentRepository.findById(id);
+    if (departments.isEmpty()) {
+      throw new RuntimeException("department not found");
+    }
+    return departments.get(0);
   }
 
 }

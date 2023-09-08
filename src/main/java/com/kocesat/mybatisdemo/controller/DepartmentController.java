@@ -16,12 +16,8 @@ public class DepartmentController {
 
   @PostMapping
   public DepartmentDto create(@RequestBody DepartmentDto dto) {
-    Department department = departmentService.save(dto);
-    System.out.println(department.getId());
-    return DepartmentDto.builder()
-      .id(department.getId())
-      .name(department.getName())
-      .build();
+    final Department department = departmentService.save(dto);
+    return DepartmentDto.from(department);
   }
 
   @GetMapping
@@ -30,7 +26,7 @@ public class DepartmentController {
   }
 
   @GetMapping("/{id}")
-  public List<Department> getById(@PathVariable("id") Integer id) {
+  public Department getById(@PathVariable("id") Integer id) {
     return departmentService.findById(id);
   }
 }
