@@ -1,8 +1,8 @@
-package com.kocesat.mybatisdemo.controller;
+package com.kocesat.mybatisdemo.controller.school;
 
-import com.kocesat.mybatisdemo.model.Department;
-import com.kocesat.mybatisdemo.model.dto.DepartmentDto;
-import com.kocesat.mybatisdemo.service.DepartmentService;
+import com.kocesat.mybatisdemo.model.school.Department;
+import com.kocesat.mybatisdemo.model.school.dto.DepartmentDto;
+import com.kocesat.mybatisdemo.service.school.DepartmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

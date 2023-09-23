@@ -1,6 +1,6 @@
-package com.kocesat.mybatisdemo.model.dto;
+package com.kocesat.mybatisdemo.model.school.dto;
 
-import com.kocesat.mybatisdemo.model.Department;
+import com.kocesat.mybatisdemo.model.school.Department;
 import lombok.Builder;
 import lombok.Data;
 

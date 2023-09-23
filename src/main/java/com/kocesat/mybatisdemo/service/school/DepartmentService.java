@@ -1,8 +1,8 @@
-package com.kocesat.mybatisdemo.service;
+package com.kocesat.mybatisdemo.service.school;
 
-import com.kocesat.mybatisdemo.model.Department;
-import com.kocesat.mybatisdemo.model.dto.DepartmentDto;
-import com.kocesat.mybatisdemo.repo.DepartmentRepository;
+import com.kocesat.mybatisdemo.model.school.Department;
+import com.kocesat.mybatisdemo.model.school.dto.DepartmentDto;
+import com.kocesat.mybatisdemo.mapper.school.DepartmentMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,21 +11,21 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class DepartmentService {
-  private final DepartmentRepository departmentRepository;
+  private final DepartmentMapper departmentMapper;
 
   public Department save(DepartmentDto dto) {
     Department department = new Department();
     department.setName(dto.getName());
-    departmentRepository.insert(department);
+    departmentMapper.insert(department);
     return department;
   }
 
   public List<Department> findAll() {
-    return departmentRepository.findAll();
+    return departmentMapper.findAll();
   }
 
   public Department findById(Integer id) {
-    List<Department> departments = departmentRepository.findById(id);
+    List<Department> departments = departmentMapper.findById(id);
     if (departments.isEmpty()) {
       throw new RuntimeException("department not found");
     }

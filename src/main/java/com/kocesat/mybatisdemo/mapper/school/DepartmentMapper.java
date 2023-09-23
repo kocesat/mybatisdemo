@@ -1,6 +1,6 @@
-package com.kocesat.mybatisdemo.repo;
+package com.kocesat.mybatisdemo.mapper.school;
 
-import com.kocesat.mybatisdemo.model.Department;
+import com.kocesat.mybatisdemo.model.school.Department;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -8,7 +8,7 @@ import java.util.List;
 
 @Mapper
 @Repository
-public interface DepartmentRepository {
+public interface DepartmentMapper {
 
   void insert(Department department);
   List<Department> findAll();

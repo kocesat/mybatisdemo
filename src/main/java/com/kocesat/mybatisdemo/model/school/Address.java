@@ -1,4 +1,4 @@
-package com.kocesat.mybatisdemo.model;
+package com.kocesat.mybatisdemo.model.school;
 
 import lombok.Builder;
 import lombok.Data;

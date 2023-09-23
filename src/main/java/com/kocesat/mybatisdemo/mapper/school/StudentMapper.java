@@ -1,15 +1,13 @@
-package com.kocesat.mybatisdemo.repo;
+package com.kocesat.mybatisdemo.mapper.school;
 
 import com.kocesat.mybatisdemo.base.Pageable;
-import com.kocesat.mybatisdemo.model.Student;
+import com.kocesat.mybatisdemo.model.school.Student;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Mapper
-@Repository
-public interface StudentRepository {
+public interface StudentMapper {
   void save(Student student);
   Student findById(Integer id);
   List<Student> findAllWithPage(Pageable pageable);

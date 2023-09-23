@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace = "com.kocesat.mybatisdemo.mapper.usergroups.UserGroupMapper">
+    <resultMap type='UserGroup' id='UserGroupResultMap'>
+        <id property='id' column='id'/>
+        <result property="active" column="active" />
+        <association property='user' resultMap='UserResultMap'/>
+        <association property='group' resultMap='GroupResultMap'/>
+    </resultMap>
+
+    <resultMap type='User' id='UserResultMap'>
+        <id property='id' column='user_id'/>
+        <result property='name' column='user_name'/>
+        <result property='active' column='user_active'/>
+    </resultMap>
+
+    <resultMap type='Group' id='GroupResultMap'>
+        <id property='id' column='group_id'/>
+        <result property='name' column='group_name'/>
+        <result property='active' column='group_active'/>
+    </resultMap>
+
+    <insert id="insert" parameterType="UserGroup" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into usergroups (active, user_id, group_id)
+        values (#{active}, #{user.id}, #{group.id})
+    </insert>
+
+    <insert id="batchInsert" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into usergroups (active, user_id, group_id)
+        values
+            <foreach collection="userGroupList" index="index" item="userGroup"
+                     separator=",">
+                (#{userGroup.active}, #{userGroup.user.id}, #{userGroup.group.id})
+            </foreach>
+
+    </insert>
+
+    <select id="selectByGroupId" parameterType="Integer" resultMap="UserGroupResultMap">
+        select
+            ug.*,
+            u.id as user_id,
+            u.active as user_active,
+            u.name as user_name,
+            g.id as group_id,
+            g.name as group_name,
+            g.active as group_active
+        from usergroups ug
+        left join users u on ug.user_id = u.id
+        left join groups g on ug.group_id = g.id
+        where ug.group_id = #{groupId}
+            and ug.active = true
+            and u.active = true
+            and g.active = true
+    </select>
+
+    <select id="selectInactivesByGroupId" parameterType="Integer" resultMap="UserGroupResultMap">
+        select
+            ug.*,
+            u.id as user_id,
+            u.active as user_active,
+            u.name as user_name,
+            g.id as group_id,
+            g.name as group_name,
+            g.active as group_active
+        from usergroups ug
+                 left join users u on ug.user_id = u.id
+                 left join groups g on ug.group_id = g.id
+        where ug.group_id = #{groupId}
+          and ug.active = false
+          and u.active = true
+          and g.active = true
+    </select>
+
+    <update id="activateByGroupIdAndUserIdList">
+        update usergroups
+        set active = true
+        where
+            group_id = #{groupId}
+            and active = false
+            and user_id in
+            <foreach collection="activationList"
+                     item="id"
+                     index="index"
+                     separator=","
+                     open="(" close=")"
+            >
+                #{id}
+            </foreach>
+    </update>
+
+    <update id="deactivateByGroupIdAndUserIdList">
+        update usergroups
+        set active = false
+        where group_id = #{groupId}
+            and active = true
+            and user_id in
+            <foreach collection="deactivationList"
+                     item="id"
+                     index="index"
+                     separator=","
+                     open="(" close=")"
+            >
+                #{id}
+            </foreach>
+    </update>
+</mapper>
+
+

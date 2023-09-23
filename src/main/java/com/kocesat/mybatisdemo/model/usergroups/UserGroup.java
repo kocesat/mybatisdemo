@@ -1,4 +1,4 @@
-package com.kocesat.mybatisdemo.model;
+package com.kocesat.mybatisdemo.model.usergroups;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Department {
+public class UserGroup {
+
   private Integer id;
-  private String name;
+  private User user;
+  private Group group;
+  private boolean active;
 }

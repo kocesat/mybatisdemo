@@ -1,11 +1,11 @@
-package com.kocesat.mybatisdemo.service;
+package com.kocesat.mybatisdemo.service.school;
 
 import com.kocesat.mybatisdemo.base.Pageable;
 import com.kocesat.mybatisdemo.constant.AppConstant;
-import com.kocesat.mybatisdemo.model.Department;
-import com.kocesat.mybatisdemo.model.Student;
-import com.kocesat.mybatisdemo.model.dto.StudentCreateDto;
-import com.kocesat.mybatisdemo.repo.StudentRepository;
+import com.kocesat.mybatisdemo.model.school.Department;
+import com.kocesat.mybatisdemo.model.school.Student;
+import com.kocesat.mybatisdemo.model.school.dto.StudentCreateDto;
+import com.kocesat.mybatisdemo.mapper.school.StudentMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -19,7 +19,7 @@ import java.util.List;
 @Transactional(isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
 @RequiredArgsConstructor
 public class StudentService {
-  private final StudentRepository studentRepository;
+  private final StudentMapper studentMapper;
   private final DepartmentService departmentService;
 
   @Transactional
@@ -31,23 +31,23 @@ public class StudentService {
       .department(department)
       .enrolledAt(LocalDateTime.now(ZoneId.of(AppConstant.TR_ZONE)))
       .build();
-    studentRepository.save(student);
+    studentMapper.save(student);
     return student;
   }
 
   public void testTransactional(Student student, boolean error) {
-    studentRepository.save(student);
+    studentMapper.save(student);
     if (error) {
       throw new RuntimeException("Transactional should cause rollback here");
     }
   }
 
   public List<Student> findByName(String name) {
-    return studentRepository.findByFirstName(name);
+    return studentMapper.findByFirstName(name);
   }
 
   public Student findById(Integer id) {
-    final var student = studentRepository.findById(id);
+    final var student = studentMapper.findById(id);
     if (student == null) {
       throw new RuntimeException("Student not found");
     }
@@ -55,7 +55,7 @@ public class StudentService {
   }
 
   public List<Student> findAll() {
-    return studentRepository.findAll();
+    return studentMapper.findAll();
   }
 
   public List<Student> findAllWithPage(Integer pageNum, Integer pageSize) {
@@ -65,10 +65,10 @@ public class StudentService {
       .limit(limit)
       .offset(offset)
       .build();
-    return studentRepository.findAllWithPage(pageable);
+    return studentMapper.findAllWithPage(pageable);
   }
 
   public List<Student> findByMultipleId(List<Integer> idList) {
-    return studentRepository.getByMultipleId(idList);
+    return studentMapper.getByMultipleId(idList);
   }
 }

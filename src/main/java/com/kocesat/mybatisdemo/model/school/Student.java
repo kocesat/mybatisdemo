@@ -1,4 +1,4 @@
-package com.kocesat.mybatisdemo.model;
+package com.kocesat.mybatisdemo.model.school;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

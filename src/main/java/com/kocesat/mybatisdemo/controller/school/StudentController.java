@@ -1,9 +1,9 @@
-package com.kocesat.mybatisdemo.controller;
+package com.kocesat.mybatisdemo.controller.school;
 
-import com.kocesat.mybatisdemo.model.Student;
-import com.kocesat.mybatisdemo.model.dto.StudentCreateDto;
-import com.kocesat.mybatisdemo.model.dto.StudentIdListWrapper;
-import com.kocesat.mybatisdemo.service.StudentService;
+import com.kocesat.mybatisdemo.model.school.Student;
+import com.kocesat.mybatisdemo.model.school.dto.StudentCreateDto;
+import com.kocesat.mybatisdemo.model.school.dto.StudentIdListWrapper;
+import com.kocesat.mybatisdemo.service.school.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
