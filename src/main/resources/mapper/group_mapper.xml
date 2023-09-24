@@ -29,18 +29,17 @@
     </select>
 
     <select id="selectAll" resultType="Group">
-        with group_summary as (
-            select group_id, count(1) as group_count
-            from usergroups
-            where active = true
-            group by group_id
+        WITH group_summary AS (
+            SELECT group_id, count(1) AS group_count
+            FROM usergroups
+            WHERE active = true
+            GROUP BY group_id
         )
-        select g.*,
-               coalesce(s.group_count, 0) as member_count
-        from groups g
-            left join group_summary s
-        on s.group_id = g.id;
-        select * from groups where active = true
+        SELECT g.*,
+               coalesce(gs.group_count, 0) AS member_count
+        FROM groups g
+        LEFT JOIN group_summary gs
+        ON gs.group_id = g.id
     </select>
 </mapper>
 
