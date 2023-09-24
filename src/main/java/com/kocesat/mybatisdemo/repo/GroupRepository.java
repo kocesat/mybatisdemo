@@ -41,4 +41,8 @@ public class GroupRepository {
     }
     return Optional.of(group.get(0));
   }
+
+  public int countById(Integer id) {
+    return groupMapper.countById(id);
+  }
 }

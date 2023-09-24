@@ -33,4 +33,11 @@ public class UserRepository {
   public List<User> selectAll() {
     return mapper.selectAll();
   }
+
+  public void deleteById(Integer id) {
+    int count = mapper.deleteById(id);
+    if (count < 1) {
+      throw new IllegalArgumentException("User not found");
+    }
+  }
 }

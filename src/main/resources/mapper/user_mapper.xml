@@ -22,7 +22,10 @@
         where active = true
     </select>
 
-
+    <update id="deleteById" parameterType="Integer">
+        update users set active = false
+        where active = true and id = #{id}
+    </update>
 </mapper>
 
 

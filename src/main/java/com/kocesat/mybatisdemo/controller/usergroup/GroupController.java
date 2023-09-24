@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/groups")
+@RequestMapping("/api/v2/groups")
 @RequiredArgsConstructor
 public class GroupController {
 
@@ -39,6 +39,6 @@ public class GroupController {
 
   @PutMapping("/with-users")
   public void updateWithUsers(@RequestBody UserGroupDto userGroupDto) {
-    userGroupService.updateGroupWithUsers(userGroupDto);
+    userGroupService.updateGroupWithUsersV2(userGroupDto);
   }
 }

@@ -1,7 +1,6 @@
 package com.kocesat.mybatisdemo.model.usergroups;
 
 import com.kocesat.mybatisdemo.model.usergroups.dto.GroupDto;
-import com.kocesat.mybatisdemo.model.usergroups.dto.UserDto;
 import com.kocesat.mybatisdemo.model.usergroups.dto.UserGroupDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,6 +15,7 @@ public class Group {
 
   private Integer id;
   private String name;
+  private int memberCount;
   private boolean active;
 
   public static Group from(UserGroupDto dto) {
@@ -37,6 +37,7 @@ public class Group {
     return GroupDto.builder()
       .id(id)
       .name(name)
+      .memberCount(memberCount)
       .build();
   }
 }

@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -23,7 +22,7 @@ public class UserGroupRepository {
   }
 
   public int saveAll(List<UserGroup> userGroupList) {
-    return mapper.batchInsert(userGroupList);
+    return mapper.insertAll(userGroupList);
   }
 
   public UserGroup create(UserGroup userGroup) {
@@ -46,5 +45,13 @@ public class UserGroupRepository {
       return 0;
     }
     return mapper.deactivateByGroupIdAndUserIdList(id, deactivationList);
+  }
+
+  public int deactivateByGroupId(Integer groupId) {
+    return mapper.deactivateByGroupId(groupId);
+  }
+
+  public int deactivateByUserId(Integer userId) {
+    return mapper.deactivateByUserId(userId);
   }
 }

@@ -4,10 +4,10 @@ import com.kocesat.mybatisdemo.model.usergroups.Group;
 import com.kocesat.mybatisdemo.model.usergroups.dto.UserGroupDto;
 import com.kocesat.mybatisdemo.repo.GroupRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -26,13 +26,10 @@ public class GroupService {
 
   public Group create(UserGroupDto userGroupDto) {
     Group group = Group.from(userGroupDto);
-    Optional<Group> groupInDb =
-      repository.findByName(group.getName());
-
-    if (groupInDb.isPresent()) {
-      throw new IllegalArgumentException("This record has been already defined in the system");
+    try {
+      return repository.create(group);
+    } catch (DuplicateKeyException e) {
+      throw new IllegalArgumentException("This group has been already defined in the system");
     }
-
-    return repository.create(group);
   }
 }

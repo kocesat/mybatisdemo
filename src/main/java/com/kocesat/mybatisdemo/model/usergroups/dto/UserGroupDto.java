@@ -11,6 +11,4 @@ public class UserGroupDto {
 
   private GroupDto group;
   private List<UserDto> users;
-
-
 }

@@ -38,12 +38,38 @@ public class UserGroupService {
       userDtos.add(userGroup.getUser().toDto());
     }
 
+    userGroupList.get(0).getGroup().setMemberCount(userDtos.size());
     return UserGroupDto.builder()
       .users(userDtos)
       .group(userGroupList.get(0).getGroup().toDto())
       .build();
   }
 
+  public void updateGroupWithUsersV2(UserGroupDto userGroupDto) {
+    final Group group = groupService.findById(userGroupDto.getGroup().getId());
+
+    userGroupRepository.deactivateByGroupId(group.getId());
+
+    List<User> activeUsers = userService.findAll();
+
+    List<UserGroup> userGroupsToAdd = userGroupDto.getUsers()
+      .stream()
+      .filter(userDto -> contains(activeUsers, userDto))
+      .map(userDto -> UserGroup.builder()
+        .group(group)
+        .active(true)
+        .user(User.from(userDto))
+        .build())
+      .toList();
+
+      userGroupRepository.saveAll(userGroupsToAdd);
+  }
+
+  public void deactivateByUserId(Integer userId) {
+    userGroupRepository.deactivateByUserId(userId);
+  }
+
+  @Deprecated(since = "V2", forRemoval = true)
   public void updateGroupWithUsers(UserGroupDto userGroupDto) {
     final Group group = groupService.findById(userGroupDto.getGroup().getId());
     List<UserGroup> actives = userGroupRepository.findByGroupId(group.getId());

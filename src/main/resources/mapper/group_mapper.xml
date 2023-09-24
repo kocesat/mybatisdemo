@@ -4,6 +4,7 @@
     <resultMap type='Group' id='GroupResultMap'>
         <id property='id' column='id'/>
         <result property='name' column='name'/>
+        <result property="memberCount" column="member_count" />
         <result property='active' column='active'/>
     </resultMap>
 
@@ -17,12 +18,28 @@
         where id = #{id} and active = true
     </select>
 
+    <select id="countById" parameterType="Integer" resultType="Integer">
+        select count(1) from groups
+        where id = #{id} and active = true
+    </select>
+
     <select id="selectByName" parameterType="String" resultType="Group">
         select * from groups
         where name = #{name} and active = true
     </select>
 
     <select id="selectAll" resultType="Group">
+        with group_summary as (
+            select group_id, count(1) as group_count
+            from usergroups
+            where active = true
+            group by group_id
+        )
+        select g.*,
+               coalesce(s.group_count, 0) as member_count
+        from groups g
+            left join group_summary s
+        on s.group_id = g.id;
         select * from groups where active = true
     </select>
 </mapper>

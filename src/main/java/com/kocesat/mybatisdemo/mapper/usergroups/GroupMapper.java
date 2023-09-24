@@ -11,5 +11,6 @@ public interface GroupMapper {
   List<Group> selectAll();
   List<Group> selectByName(String name);
   List<Group> selectById(Integer id);
+  int countById(Integer id);
   int insert(Group group);
 }

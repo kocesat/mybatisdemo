@@ -25,14 +25,13 @@
         values (#{active}, #{user.id}, #{group.id})
     </insert>
 
-    <insert id="batchInsert" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+    <insert id="insertAll" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         insert into usergroups (active, user_id, group_id)
         values
             <foreach collection="userGroupList" index="index" item="userGroup"
                      separator=",">
                 (#{userGroup.active}, #{userGroup.user.id}, #{userGroup.group.id})
             </foreach>
-
     </insert>
 
     <select id="selectByGroupId" parameterType="Integer" resultMap="UserGroupResultMap">
@@ -86,6 +85,18 @@
             >
                 #{id}
             </foreach>
+    </update>
+
+    <update id="deactivateByGroupId">
+        update usergroups
+        set active = false
+        where group_id = #{groupId} and active = true
+    </update>
+
+    <update id="deactivateByUserId">
+        update usergroups
+        set active = false
+        where user_id = #{userId} and active = true
     </update>
 
     <update id="deactivateByGroupIdAndUserIdList">

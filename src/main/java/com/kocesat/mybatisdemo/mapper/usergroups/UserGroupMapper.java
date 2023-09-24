@@ -10,13 +10,13 @@ import java.util.List;
 public interface UserGroupMapper {
 
   int insert(UserGroup userGroup);
-  int batchInsert(List<UserGroup> userGroupList);
+  int insertAll(List<UserGroup> userGroupList);
   List<UserGroup> selectByGroupId(@Param("groupId") Integer groupId);
   List<UserGroup> selectInactivesByGroupId(Integer groupId);
-
+  int deactivateByGroupId(Integer groupId);
+  int deactivateByUserId(Integer userId);
   int activateByGroupIdAndUserIdList(@Param("groupId") Integer id,
                                      @Param("activationList") List<Integer> activationList);
-
   int deactivateByGroupIdAndUserIdList(@Param("groupId") Integer id,
                                        @Param("deactivationList") List<Integer> deactivationList);
 }
