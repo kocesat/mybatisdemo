@@ -4,6 +4,7 @@ import com.kocesat.mybatisdemo.base.Pageable;
 import com.kocesat.mybatisdemo.constant.AppConstant;
 import com.kocesat.mybatisdemo.model.school.Department;
 import com.kocesat.mybatisdemo.model.school.Student;
+import com.kocesat.mybatisdemo.model.school.StudentFeePayment;
 import com.kocesat.mybatisdemo.model.school.dto.StudentCreateDto;
 import com.kocesat.mybatisdemo.mapper.school.StudentMapper;
 import lombok.RequiredArgsConstructor;
@@ -44,6 +45,10 @@ public class StudentService {
 
   public List<Student> findByName(String name) {
     return studentMapper.findByFirstName(name);
+  }
+
+  public List<StudentFeePayment> findAllWithFeePayments() {
+    return studentMapper.findAllWithFeePayments();
   }
 
   public Student findById(Integer id) {

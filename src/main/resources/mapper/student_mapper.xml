@@ -9,6 +9,21 @@
         <association property='department' resultMap='DepartmentResultMap'/>
         <association property='address' resultMap='AddressResultMap'/>
     </resultMap>
+    
+    <resultMap id="StudentFeePaymentResultMap" type="StudentFeePayment">
+        <id property='id' column='student_id'/>
+        <result property='firstName' column='student_first_name'/>
+        <result property='age' column='student_age'/>
+        <result property="enrolledAt" column="student_enrolled_at" javaType="java.time.LocalDateTime" />
+        <collection property="feePayments" ofType="FeePayment" resultMap="FeePaymentResultMap" columnPrefix="fp_" />
+    </resultMap>
+
+    <resultMap id="FeePaymentResultMap" type="FeePayment">
+        <id property="id" column="id" />
+        <result property="year" column="year" />
+        <result property="month" column="month" />
+        <result property="amount" column="amount" />
+    </resultMap>
 
     <resultMap type='Department' id='DepartmentResultMap'>
         <id property='id' column='department_id'/>
@@ -25,6 +40,20 @@
         <parameter property="offset" javaType="Integer" />
     </parameterMap>
 
+    <select id="findAllWithFeePayments" resultMap="StudentFeePaymentResultMap">
+        select
+            s.id as student_id,
+            s.first_name as student_first_name,
+            s.age as student_age,
+            fp.id as fp_id,
+            fp.amount as fp_amount,
+            fp.year as fp_year,
+            fp.month as fp_month
+        from  students s
+        left outer join fee_payments fp
+        on s.id = fp.student_id
+    </select>
+
     <insert id="save" parameterType="Student" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         insert into students (first_name, age, department_id, enrolled_at, address_id)
         values (#{firstName}, #{age}, #{department.id}, #{enrolledAt}, #{address.id})
@@ -37,7 +66,7 @@
     <select id="findByFirstName" parameterType="String" resultType="Student">
         select * from students where first_name = #{firstName}
     </select>
-    
+
     <select id="getAll" resultType="Student">
     	select * from students
     </select>

@@ -1,6 +1,7 @@
 package com.kocesat.mybatisdemo.controller.school;
 
 import com.kocesat.mybatisdemo.model.school.Student;
+import com.kocesat.mybatisdemo.model.school.StudentFeePayment;
 import com.kocesat.mybatisdemo.model.school.dto.StudentCreateDto;
 import com.kocesat.mybatisdemo.model.school.dto.StudentIdListWrapper;
 import com.kocesat.mybatisdemo.service.school.StudentService;
@@ -32,6 +33,11 @@ public class StudentController {
     return ResponseEntity.ok(students);
   }
 
+  @GetMapping("/fee-payments")
+  public ResponseEntity<List<StudentFeePayment>> getAllWithFeePayments() {
+    final var students = studentService.findAllWithFeePayments();
+    return ResponseEntity.ok(students);
+  }
 
   @GetMapping("/{id}")
   public ResponseEntity<Student> findById(@PathVariable("id") Integer id) {

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace = "com.kocesat.mybatisdemo.mapper.school.FeePaymentMapper">
+    <resultMap id="FeePaymentResultMap" type="FeePayment">
+        <id property="id" column="id" />
+        <result property="year" column="year" />
+        <result property="month" column="month" />
+        <result property="amount" column="amount" />
+        <association property="student" resultMap="StudentResultMap" columnPrefix="student_"/>
+    </resultMap>
+
+    <resultMap type='Student' id='StudentResultMap'>
+        <id property='id' column='id'/>
+        <result property='firstName' column='first_name'/>
+        <result property='age' column='age'/>
+        <result property="enrolledAt" column="enrolled_at" javaType="java.time.LocalDateTime" />
+    </resultMap>
+
+    <select id="findAll" resultMap="FeePaymentResultMap">
+        select
+            s.first_name as student_first_name,
+            s.id as student_id,
+            fp.*
+        from fee_payments fp
+        left outer join students s
+        on s.id = fp.student_id
+    </select>
+
+</mapper>
+
+
