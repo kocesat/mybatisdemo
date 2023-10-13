@@ -12,14 +12,23 @@ spring:
     driver-class-name: org.postgresql.Driver
     username: kocesat
     password: Ankara06
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: none
+  quartz:
+    job-store-type: jdbc
+    scheduler-name: mybatis_demo
     properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-        format_sql: true
+      org:
+        quartz:
+          jobStore:
+            tablePrefix: QRTZ_
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.PostgreSQLDelegate
+            isClustered: true
+            misfireThreshold: 5000
+            useProperties: true
+          scheduler:
+            instanceId: AUTO
+          threadPool:
+            threadCount: 5
+
 # Mybatis configuration
 mybatis:
   mapper-locations: classpath:mapper/*

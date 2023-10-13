@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace = "com.kocesat.mybatisdemo.mapper.outbox.OutboxMapper">
+    <resultMap id="BaseResultMap" type="Outbox">
+        <id property="id" column="id" />
+        <result property="insertTime" column="insert_time" javaType="java.time.LocalDateTime"/>
+        <result property="updateTime" column="update_time" javaType="java.time.LocalDateTime"/>
+        <result property="serviceId" column="service_id" />
+        <result property="status" column="status" />
+        <result property="data" column="data" />
+    </resultMap>
+
+    <insert id="insert" parameterType="Outbox" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into outbox
+        (
+             insert_time,
+             update_time,
+             service_id,
+             status,
+             data
+         )
+        values
+        (
+            current_timestamp,
+            current_timestamp,
+            #{serviceId},
+            #{status},
+            #{data}
+        )
+    </insert>
+
+
+    <select id="getProcessList" resultMap="BaseResultMap">
+        select *
+        from outbox
+        <where>
+            <if test="status != null">
+                status = #{status,jdbcType=DECIMAL} and
+            </if>
+            <if test="serviceId != null">
+                service_id = #{serviceId,jdbcType=DECIMAL} and
+            </if>
+            <if test="insertTimeStart != null">
+                insert_time <![CDATA[ > ]]> #{insertTimeStart}
+            </if>
+        </where>
+        limit 10
+    </select>
+
+    <update id="updatePreProcess" parameterType="OutboxUpdateModel">
+        update outbox
+        <set>
+            status = #{newStatus},
+            service_id = #{newServiceId},
+            update_time = current_timestamp
+        </set>
+        <where>
+            id in
+            (
+                select id
+                from outbox
+                where 1=1
+                    and status = #{status}
+                    and insert_time <![CDATA[ > ]]> #{insertTimeStart}
+                limit 10
+            )
+        </where>
+    </update>
+
+    <update id="updateById" parameterType="OutboxUpdateModel">
+        update outbox
+        <set>
+            service_id = #{newServiceId},
+            status = #{newStatus},
+            update_time = current_timestamp
+        </set>
+        <where> 1=1
+            and id = #{id}
+            and status = #{status}
+        </where>
+    </update>
+</mapper>
+
+
