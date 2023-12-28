@@ -1,5 +1,7 @@
 package com.kocesat.mybatisdemo.service.usergroup;
 
+import com.kocesat.mybatisdemo.base.exception.BusinessException;
+import com.kocesat.mybatisdemo.constant.ErrorCode;
 import com.kocesat.mybatisdemo.model.usergroups.Group;
 import com.kocesat.mybatisdemo.model.usergroups.dto.UserGroupDto;
 import com.kocesat.mybatisdemo.repo.GroupRepository;
@@ -29,7 +31,7 @@ public class GroupService {
     try {
       return repository.create(group);
     } catch (DuplicateKeyException e) {
-      throw new IllegalArgumentException("This group has been already defined in the system");
+      throw new BusinessException(ErrorCode.DUPLICATE_GROUP);
     }
   }
 }

@@ -12,6 +12,9 @@ spring:
     driver-class-name: org.postgresql.Driver
     username: kocesat
     password: Ankara06
+  messages:
+    fallback-to-system-locale: false
+    basename: messages, messages/info, messages/error
   quartz:
     job-store-type: jdbc
     scheduler-name: mybatis_demo
