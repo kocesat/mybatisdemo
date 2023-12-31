@@ -31,7 +31,12 @@ spring:
             instanceId: AUTO
           threadPool:
             threadCount: 5
-
+  cache:
+    type: redis
+    host: localhost
+    port: 6379
+    redis:
+      time-to-live: 120000
 # Mybatis configuration
 mybatis:
   mapper-locations: classpath:mapper/*

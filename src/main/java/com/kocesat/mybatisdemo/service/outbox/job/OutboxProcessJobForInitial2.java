@@ -22,8 +22,8 @@ public class OutboxProcessJobForInitial2 extends QuartzJobBean {
 
   @Override
   protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
-    log.info("OutboxProcessJobForInitial2 fired at: " + LocalDateTime.now());
+//    log.info("OutboxProcessJobForInitial2 fired at: " + LocalDateTime.now());
     batchService.executeOutboxJob(OutboxProcessor.INITIAL_2, OutboxStatus.INITIAL);
-    log.info("OutboxProcessJobForInitial2 finished at: " + LocalDateTime.now());
+//    log.info("OutboxProcessJobForInitial2 finished at: " + LocalDateTime.now());
   }
 }

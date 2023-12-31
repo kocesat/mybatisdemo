@@ -24,7 +24,7 @@ public class OutboxBatchService {
       outboxService.updateAsProcessingInNewTx(status, processor, queryTimeStart);
       List<Outbox> processList = outboxService.getProcessList(OutboxStatus.PROCESSING, processor, queryTimeStart);
       if (processList.isEmpty()) {
-        log.info(String.format("No outbox with status %s found to process!", status.name()));
+//        log.info(String.format("No outbox with status %s found to process!", status.name()));
         return;
       }
       for (Outbox outbox : processList) {
