@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kocesat.mybatisdemo.mapper.channel.FunctionMapper">
+  <resultMap id="BaseResultMap" type="com.kocesat.mybatisdemo.model.channel.Function">
+    <id column="code" jdbcType="VARCHAR" property="code" />
+    <result column="name_tr" jdbcType="VARCHAR" property="nameTr" />
+    <result column="name_en" jdbcType="VARCHAR" property="nameEn" />
+    <result column="is_monetary" jdbcType="BOOLEAN" property="isMonetary" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="modified_at" jdbcType="TIMESTAMP" property="modifiedAt" />
+    <result column="created_user" jdbcType="VARCHAR" property="createdUser" />
+    <result column="status" jdbcType="SMALLINT" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    code, name_tr, name_en, is_monetary, created_at, modified_at, created_user, "status"
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from "tfunction"
+    where code = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from "tfunction"
+    where code = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" keyColumn="code" keyProperty="code" parameterType="com.kocesat.mybatisdemo.model.channel.Function" useGeneratedKeys="true">
+    insert into "tfunction" (name_tr, name_en, is_monetary, 
+      created_at, modified_at, created_user, 
+      "status")
+    values (#{nameTr,jdbcType=VARCHAR}, #{nameEn,jdbcType=VARCHAR}, #{isMonetary,jdbcType=BOOLEAN}, 
+      #{createdAt,jdbcType=TIMESTAMP}, #{modifiedAt,jdbcType=TIMESTAMP}, #{createdUser,jdbcType=VARCHAR}, 
+      #{status,jdbcType=SMALLINT})
+  </insert>
+  <insert id="insertSelective" keyColumn="code" keyProperty="code" parameterType="com.kocesat.mybatisdemo.model.channel.Function" useGeneratedKeys="true">
+    insert into "tfunction"
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="nameTr != null">
+        name_tr,
+      </if>
+      <if test="nameEn != null">
+        name_en,
+      </if>
+      <if test="isMonetary != null">
+        is_monetary,
+      </if>
+      <if test="createdAt != null">
+        created_at,
+      </if>
+      <if test="modifiedAt != null">
+        modified_at,
+      </if>
+      <if test="createdUser != null">
+        created_user,
+      </if>
+      <if test="status != null">
+        "status",
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="nameTr != null">
+        #{nameTr,jdbcType=VARCHAR},
+      </if>
+      <if test="nameEn != null">
+        #{nameEn,jdbcType=VARCHAR},
+      </if>
+      <if test="isMonetary != null">
+        #{isMonetary,jdbcType=BOOLEAN},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedAt != null">
+        #{modifiedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUser != null">
+        #{createdUser,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kocesat.mybatisdemo.model.channel.Function">
+    update "tfunction"
+    <set>
+      <if test="nameTr != null">
+        name_tr = #{nameTr,jdbcType=VARCHAR},
+      </if>
+      <if test="nameEn != null">
+        name_en = #{nameEn,jdbcType=VARCHAR},
+      </if>
+      <if test="isMonetary != null">
+        is_monetary = #{isMonetary,jdbcType=BOOLEAN},
+      </if>
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedAt != null">
+        modified_at = #{modifiedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUser != null">
+        created_user = #{createdUser,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        "status" = #{status,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where code = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kocesat.mybatisdemo.model.channel.Function">
+    update "tfunction"
+    set name_tr = #{nameTr,jdbcType=VARCHAR},
+      name_en = #{nameEn,jdbcType=VARCHAR},
+      is_monetary = #{isMonetary,jdbcType=BOOLEAN},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      modified_at = #{modifiedAt,jdbcType=TIMESTAMP},
+      created_user = #{createdUser,jdbcType=VARCHAR},
+      "status" = #{status,jdbcType=SMALLINT}
+    where code = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>
